@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('/media/media/background_netflix.jpg') center center fixed; /* Add your image path */
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+        }
+
+        form {
+            width: 300px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.4); /* Use rgba to add transparency to the background */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 12px);
+            padding: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button[type="submit"] {
+            padding: 8px 20px;
+            background-color: #e50914;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #cc0812;
+        }
+        .text-center{
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Login</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+       <b>  <p class="text-center">Don't have an account? <a href="{% url 'register_customer' %}">Sign Up</a></p></b>
+    </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!-- partials/_movie_list.html -->
+<div class="main-content">
+    <div class="movie-list">
+        {% for i in kid %}
+        <div class="movie-card">
+            <a href="{% url 'moviekiddetail' i.id %}">
+                <img src="{{ i.poster.url }}" alt="{{ i.title }}">
+            </a>
+            <h2>{{ i.title }}</h2>
+            <p>Duration: {{ i.genre }}</p> <!-- Adjust field names as needed -->
+            <p>Year: {{ i.release_date }}</p>
+        </div>
+        {% empty %}
+        
+        {% endfor %}
+    </div>
+</div>
+

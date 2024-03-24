@@ -1,0 +1,22 @@
+<h1>Profile List for {{ customer.firstname }}</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Profile Name</th>
+      <!-- Add other profile attributes as needed -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for profile in profiles %}
+      <tr>
+        <td>{{ profile.profilename }}</td>
+        <!-- Display other profile details as needed -->
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{% url 'profile_registration' customer.id %}">Create Profile</a>
+<a href="{% url 'profile_registration' customer.id %}">Create Profile</a>
+

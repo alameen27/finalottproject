@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Title</title>
+    {% load static %}
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            background-color: #111;
+            color: #fff;
+        }
+
+        h1, h2, p {
+            margin: 10px 0;
+        }
+
+        /* Style for profile boxes */
+        .profile-box {
+            display: inline-block;
+            width: 150px; /* Adjust as needed */
+            height: 150px; /* Set a fixed height to make the box square */
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .profile-box:hover {
+            background-color: #e50914;
+        }
+
+        .profile-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .profile-box a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        form {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        button {
+            background-color: #e50914;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff7f00;
+        }
+    </style>
+</head>
+<body>
+
+<h1>WELCOME {{ customer.firstname|upper }}</h1>
+
+<h2>Profile Details</h2>
+{% if profile %}
+  {% for i in profile %}
+    <div class="profile-box">
+      <a href="{% url 'profile_details' customer.id i.id %}">
+                    <img src="{{ i.avatar.url}}" alt="Avatar">
+                    <p>Profile Name: {{ i.profilename }}</p>
+
+                    <form method="post" action="{% url 'update_profile' customer.id i.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Update</button>
+                    </form>
+
+                    <form method="post" action="{% url 'delete_profile' customer.id i.id %}" onclick="confirmDelete('{{ i.profilename }}')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </a>
+    </div>
+  {% endfor %}
+{% endif %}
+
+<h2>Kid Profile Details</h2>
+{% if kid_profiles %}
+  {% for i in kid_profiles %}
+    <div class="profile-box">
+      <a href="{% url 'kidprofile_details' customer.id i.id %}">
+                    <img src="{{ i.avatar.url }}" alt="Avatar">
+                    <p>Profile Name: {{ i.name }}</p>
+
+                    <form method="post" action="{% url 'update_kid_profile' customer.id i.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Update</button>
+                    </form>
+
+                    <form method="post" action="{% url 'delete_kid_profile' customer.id i.id %}" onclick="confirmDelete('{{ i.name }}')">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </a>
+    </div>
+  {% endfor %}
+{% endif %}
+
+<br>
+<br>
+<!-- Add a button to create a profile -->
+<form method="post" action="{% url 'profile_registration' customer.id %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  <button type="submit">Create an Adult Profile</button>
+</form>
+
+<button>Edit Profile</button>
+
+
+<form method="post" action="{% url 'kid_profile_registration' customer.id %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  <button type="submit">Create a Kid Profile</button>
+</form>
+
+
+</body>
+</html>

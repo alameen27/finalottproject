@@ -1,0 +1,106 @@
+<!-- movie_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ moviekid.title }} Details</title>
+    <style>
+        /* Add your styles here or link to an external stylesheet if needed */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #141414;
+            color: #ffffff;
+        }
+
+        .header {
+            background-color: #111;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .header img {
+            max-width: 200px; /* Adjust the max-width as needed */
+        }
+
+        .main-content {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #111;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #e50914;
+        }
+
+        .details-container {
+            font-style: oblique;
+            font-size: larger;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between; /* Align items horizontally */
+            flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+        }
+
+        .details-container img {
+            max-width: 300px; /* Adjust the max-width as needed */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .details-container p {
+            margin: 10px 0;
+        }
+
+        iframe {
+            max-width: 500px; /* Adjust the max-width as needed */
+            width: 100%; /* Make the iframe fill the container */
+            height: 315px; /* Adjust the height as needed */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #111;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 12px;
+            color: #808080;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="netflix-logo.png" alt="Netflix Logo">
+</div>
+<div class="main-content">
+    <h1>{{ moviekid.title }}</h1>
+    <div class="details-container">
+        <div>
+            <img src="{{ moviekid.poster.url }}" alt="{{ moviekid.title }}">
+            <div>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/RqrXhwS33yc?si=iOyKa485eacw3AIX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <p>Synopsis: {{ moviekid.description }}</p>
+            <p>Genre: {{ moviekid.genre }}</p>
+            <p>Date: {{ moviekid.release_date }}</p>
+            <!-- Add other movie details as needed -->
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Netflix Clone</p>
+</footer>
+
+</body>
+</html>

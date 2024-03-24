@@ -1,0 +1,18 @@
+<!-- partials/_movie_list.html -->
+<div class="main-content">
+    <div class="movie-list" > <!-- Adjust the height value as needed -->
+        {% for i in move %}
+        <div class="movie-card">
+            <a href="{% url 'movie_detail' i.id %}">
+                <img src="{{ i.image.url }}" alt="{{ i.name }}">
+            </a>
+            <p>{{ i.name }}</p>
+            <p>Duration: {{ i.duration }}</p> <!-- Adjust field names as needed -->
+            <p>Year: {{ i.year }}</p>
+            <p>Rating: {{ i.rating }}</p>
+        </div>
+        {% empty %}
+        
+        {% endfor %}
+    </div>
+</div>

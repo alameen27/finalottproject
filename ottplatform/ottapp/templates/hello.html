@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Clone</title>
+    <style>
+        body {
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+
+        }
+        
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header img {
+            width: 120px;
+            height: auto;
+        }
+        
+        .main-content {
+            flex-grow: 1;
+            max-width: 1450px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #e50914;
+        }
+        
+        .movie-list {
+            display: flex; /* Use flexbox to create a horizontal layout */
+            gap: 20px; /* Adjust the gap between movie cards as needed */
+            overflow-x: auto; /* Allow horizontal scrolling if there are many movies */
+            padding-bottom: 20px; /* Add some space at the bottom for clarity */
+        }
+        
+        .movie-card {
+            width: 200px;
+            text-align: center;
+            flex-shrink: 0;
+            position: relative; /* Add position:relative for absolute positioning */
+            overflow: hidden; /* Hide overflow to prevent box-shadow from being cut off */
+                }
+
+        .movie-card img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            transition: transform 0.3s ease-in-out; /* Add transition for smooth hover effect */
+        }
+
+        .movie-card:hover img {
+            transform: scale(1.1); /* Scale the image on hover */
+        }
+
+        .movie-card h2 {
+            margin-top: 10px;
+            font-size: 16px;
+            text-align: center;
+            transition: color 0.3s ease-in-out; /* Add transition for smooth hover effect */
+        }
+
+        .movie-card:hover h2 {
+            color: #e50914; /* Change text color on hover */
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #222;
+            color: #fff;
+        }
+
+      
+        .movie-list::-webkit-scrollbar {
+            width: 0.5em;
+        }
+        
+        .movie-list::-webkit-scrollbar-thumb {
+            background-color: #111; /* Set to the same color as your webpage background */
+        }
+        
+        .movie-list::-webkit-scrollbar-track {
+            background-color: #111; /* Set to the same color as your webpage background */
+        }
+        #search {
+            
+            margin-top: 20px; /* Adjust the margin as needed */
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333; /* Netflix search bar background color */
+            color: white;
+            outline: none;
+        }
+        #movie-list-container {
+            margin-top: 20px; /* Adjust the margin as needed */
+        }
+        
+
+        
+</style>
+    
+</head>
+<body>
+
+<input type="text" id="search" placeholder="Type to search...">
+<div id="movie-list-container">
+    {% include 'partials/_movie_list.html' %}
+</div>
+
+<div class="main-content">
+    <h1>Recommended Movies</h1>
+    <div class="movie-list">
+        {% for movie in movies %}
+        <div class="movie-card">
+            <a href="{% url 'movie_detail' movie.id %}">
+                <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
+            </a>
+            <h2>{{ movie.name }}</h2>
+            <p>Duration: {{ movie.Duration }}</p>
+            <p>Year: {{ movie.year }}</p>
+            <p>Rating: {{ movie.rating }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+<div class="main-content">
+    <h1>Upcoming Movies</h1>
+    <div class="movie-list">
+        {% for i  in upmov %}
+        <div class="movie-card">
+            <a href="{% url 'upcoming_movies' i.id %}">
+                <img src="{{ i.image.url }}" alt="{{ i.name }}">
+            </a>
+          
+            <h2>{{ i.name }}</h2>
+            <p>Duration: {{ i.Duration }}</p>
+            <p>Year: {{ i.year }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+<script>
+    var baseUrl = "{% url 'movie_list' %}";
+    var isSearchActive = false;
+
+    function updateMovieList(query) {
+        $.ajax({
+            url: baseUrl,
+            data: { 'q': query },
+            dataType: 'json',
+            success: function(data) {
+                $('#movie-list-container').html(data.html);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        $('#search').keyup(function(){
+            var query = $(this).val();
+
+            if (query.trim() !== '') {
+                isSearchActive = true;
+                updateMovieList(query);
+            } else if (isSearchActive) {
+                isSearchActive = false;
+                // Restore the original movie list or take appropriate action
+                // For example, you might reload the entire page or display a default list.
+                // For simplicity, let's assume you have the original HTML content stored somewhere.
+                var originalContent = ''; // Replace this with your original content
+                $('#movie-list-container').html(originalContent);
+            }
+        });
+    });
+</script>
+</html>
